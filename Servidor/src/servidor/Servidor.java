@@ -45,7 +45,14 @@ public class Servidor {
             System.out.println("----------------------------------");
 
             //Lï¿½ os dados atï¿½ o fim 
-            String lido = "";
+            String lido = inputReader.readLine();
+            
+            String aux = lido.substring(5);
+            int espaco = aux.indexOf(" ");
+            String path = aux.substring(0, espaco);
+            
+            System.out.println("path:" + path + "  aux:" + aux );
+            
             do {
                     lido = inputReader.readLine();
                     System.out.println(lido); //Exibe o que foi recebido na tela
@@ -63,9 +70,27 @@ public class Servidor {
                         new PrintWriter(
                             new OutputStreamWriter( outputStream ));
 	        
-                outputWriter.println("HTTP/1.0 302 DeuCertoooo");
-                outputWriter.println("Location: https://www.uniceub.br");
+                outputWriter.println("HTTP/1.0 200 DeuCertoooo");
                 outputWriter.println(); // The empty line
+                outputWriter.println("<h1>"
+                        + "<font color='red'>"
+                        + "teste"
+                        + "</font>"
+                        + "</h1>"
+                        + "<form>"
+                        + "teste gambi: <input type='text'>"
+                        + "<br/>"
+                        + "<input type='submit'>"
+                        + "</form>");
+                
+                if("batata".equals(path)){
+                    outputWriter.println("<img height='100px' src='https://yt3.ggpht.com/-cHFMZ-sad-E/AAAAAAAAAAI/AAAAAAAAAAA/dTSVHSra930/s900-c-k-no-mo-rj-c0xffffff/photo.jpg'>");
+                }
+                if("cenoura".equals(path)){
+                    outputWriter.println("<img height='100px' src='http://medicina-tradicional-chinesa.com/wp-content/uploads/2013/02/carrots.jpg'>");
+                }
+                
+                
 	        
 	        outputWriter.close();
 	          socket.close();
