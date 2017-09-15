@@ -14,9 +14,9 @@ import javax.servlet.http.HttpServletResponse;
 
 /**
  *
- * @author Rafael.Soares
+ * @author rafael.soares
  */
-public class Escolher extends HttpServlet {
+public class Final extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -32,47 +32,48 @@ public class Escolher extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             
-            String portaUsrString = request.getParameter("porta");
-            int portaUsr = Integer.parseInt(portaUsrString);
-                        
-            //sorteia um numero de 0 a 2
-            int porta;
+            String portaUsuString = request.getParameter("porta");
+            int portaUsu = Integer.parseInt(portaUsuString);
+            
+            String portaAbertaString = request.getParameter("aberta");
+            int portaAberta = Integer.parseInt(portaAbertaString);
+            
+            int portaPremiada;
             do{
-                porta = Math.abs(new Random().nextInt() % 3);
+                portaPremiada = Math.abs(new Random().nextInt(3));
+            } while (portaPremiada == portaAberta);
+            
+            String mensagem = "Voce ";
+            if(portaUsu == portaPremiada){
+                mensagem = mensagem + "Venceu!";
+            } else {
+                mensagem = mensagem + "Perdeu!";
             }
-            while(portaUsr == porta);
-            
-            
             
             
             /* TODO output your page here. You may use following sample code. */
             out.println("<!DOCTYPE html>");
             out.println("<html>");
-            out.println("<head>         <style>\n" +
-"            img{\n" +
-"                padding-left: 20px; \n" +
-"                height: 150px;\n" +
-"            }\n" +
-"        </style>");
-            out.println("<title>Servlet Escolher</title>");            
+            out.println("<head>");
+            out.println("<title>Servlet Final</title>");
+            out.println("<head>         "
+                    + "<style>" +
+"            img{padding-left: 20px;" +
+"                height: 150px;" +
+"            }" +
+"        </style>");            
             out.println("</head>");
             out.println("<body>");
+            out.println("<h1>Porta Premiada</h1>");
+            out.println("<h2>" + mensagem + "</h2>");
             
-            
-            out.println("<h1>Porta premiada</h1>");
-            out.println("<h2> Quer trocar de porta?</h2>");
-            
-            for (int i = 0; i < 3; i++) {
-                if(porta == i){
-                    out.println("<img src=\"vazia.png\">");    
+            for(int i=0; i < 3; i++){
+                if(i == portaPremiada){
+                    out.println("<img src=\"premiada.png\">");
                 } else {
-                    out.println("<a href=\"Final?porta="+i+"&aberta="+porta+"\">");
-                        out.println("<img src=\"fechada.png\">");    
-                    out.println("</a>");
+                    out.println("<img src=\"vazia.png\">");
                 }
             }
-            
-            
             
             out.println("</body>");
             out.println("</html>");

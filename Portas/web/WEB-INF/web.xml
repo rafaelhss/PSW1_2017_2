@@ -4,9 +4,17 @@
         <servlet-name>Escolher</servlet-name>
         <servlet-class>Escolher</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>Final</servlet-name>
+        <servlet-class>Final</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>Escolher</servlet-name>
         <url-pattern>/Escolher</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>Final</servlet-name>
+        <url-pattern>/Final</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
