@@ -38,16 +38,16 @@ public class CalcularIMC extends HttpServlet {
             // pegar a altura -> variavel
             String altura = request.getParameter(alt);
             
+            //Converter o peso(string) para float
+            //Este passo é necessário para que se possa realizar operações com os valores:
             float pesoF = Float.parseFloat(peso);
             float alturaF = Float.parseFloat(altura);
             
-            
+            //Calculo do imc:
             float imc = pesoF / (alturaF * alturaF);
             
-            
-            
-            
             /* TODO output your page here. You may use following sample code. */
+            //Estrutura html que irá apresentar o valor do imc:
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
