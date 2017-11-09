@@ -4,9 +4,17 @@
         <servlet-name>Banco</servlet-name>
         <servlet-class>Banco</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>Listar</servlet-name>
+        <servlet-class>Listar</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>Banco</servlet-name>
         <url-pattern>/Banco</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>Listar</servlet-name>
+        <url-pattern>/Listar</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

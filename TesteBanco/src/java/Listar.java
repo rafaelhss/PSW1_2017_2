@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.ResultSet;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -15,9 +16,9 @@ import javax.servlet.http.HttpServletResponse;
 
 /**
  *
- * @author rafael.soares
+ * @author Rafael.Soares
  */
-public class Banco extends HttpServlet {
+public class Listar extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -32,36 +33,35 @@ public class Banco extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
-           
+            
             try {
-                
-                String nome = request.getParameter("nome");
-                float preco = Float.parseFloat(request.getParameter("preco"));
-                String data = request.getParameter("validade");                
-                
-                
                 Class.forName("org.apache.derby.jdbc.ClientDriver");
-
+                
                 Connection con = DriverManager.getConnection("jdbc:derby://localhost:1527/sample","app", "app");
 
                 java.sql.Statement comando = con.createStatement();            
                 
-                //String comandoSQL = "INSERT INTO PRODUTOS VALUES ('nome', 1.2, '2017-11-30')";
-                String comandoSQL = "INSERT INTO PRODUTOS VALUES ('" + nome + "'," + preco + ",'" + data + "')";
-                System.out.println("Comando: " + comandoSQL);
-                comando.executeUpdate(comandoSQL);
-
-                comando.close();
-                con.close();
                 
-                out.println("Registro incluido com sucesso");
-
+                String sql = "Select * from produtos where preco > 1";
+                
+                ResultSet resultado = comando.executeQuery(sql);
+                
+                
+                while(resultado.next()){ 
+                    String preco = resultado.getString("preco");
+                    String nome = resultado.getString(1);
+                    
+                    out.println("Produto: " + nome + " R$" + preco + "<br/>");
+                }
+                System.out.println("acabou...");
+                
+                
+                
+                
             } catch (Exception e) {
-                out.println("Algo aconteceu de ruim...");
                 e.printStackTrace();
             }
-            
-            
+
             
             
             
