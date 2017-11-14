@@ -9,6 +9,8 @@ import java.io.PrintWriter;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
+import java.util.ArrayList;
+import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -47,13 +49,18 @@ public class Listar extends HttpServlet {
                 ResultSet resultado = comando.executeQuery(sql);
                 
                 
-                while(resultado.next()){ 
-                    String preco = resultado.getString("preco");
-                    String nome = resultado.getString(1);
-                    
-                    out.println("Produto: " + nome + " R$" + preco + "<br/>");
-                }
-                System.out.println("acabou...");
+               List<Produto> produtos = new ArrayList<>();
+               while(resultado.next()){
+                   Produto p = new Produto();
+                   p.setNome(resultado.getString("NOME"));
+                   p.setPreco(resultado.getFloat("PRECO"));
+                   p.setValidade(resultado.getString("VALIDADE"));
+                   produtos.add(p);
+               }
+               
+               request.setAttribute("lista", produtos);
+               request.getRequestDispatcher("lista.jsp")
+                       .forward(request, response);
                 
                 
                 

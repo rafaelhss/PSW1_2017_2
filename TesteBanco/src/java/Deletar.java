@@ -8,9 +8,6 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Connection;
 import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.util.ArrayList;
-import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -20,7 +17,7 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author Rafael.Soares
  */
-public class Pesquisar extends HttpServlet {
+public class Deletar extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -35,41 +32,33 @@ public class Pesquisar extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
-            
-            try {
-                
-               Class.forName("org.apache.derby.jdbc.ClientDriver");
-               
-               Connection con = DriverManager.getConnection("jdbc:derby://localhost:1527/sample","app", "app");
 
-               java.sql.Statement comando = con.createStatement();   
-               
-               
-               String produto = request.getParameter("prod");
-               
-               String sql = "SELECT * FROM PRODUTOS WHERE NOME LIKE '%XXXX%'";
-               sql = sql.replace("XXXX", produto);
-                System.out.println("SQL:" + sql);
-               ResultSet resultado = comando.executeQuery(sql);
+            try{
+                Class.forName("org.apache.derby.jdbc.ClientDriver");
                 
-               List<Produto> produtos = new ArrayList<>();
-               while(resultado.next()){
-                   Produto p = new Produto();
-                   p.setNome(resultado.getString("NOME"));
-                   p.setPreco(resultado.getFloat("PRECO"));
-                   p.setValidade(resultado.getString("VALIDADE"));
-                   produtos.add(p);
-               }
-               
-               request.setAttribute("lista", produtos);
-               request.getRequestDispatcher("lista.jsp")
-                       .forward(request, response);
-               
-               
+                Connection con = DriverManager.getConnection("jdbc:derby://localhost:1527/sample","app", "app");
+
+                java.sql.Statement comando = con.createStatement();  
+                
+                
+                String nome = request.getParameter("nome");
+                
+                String sql = "DELETE FROM PRODUTOS WHERE NOME = '@@NOME@@'";
+                sql = sql.replace("@@NOME@@", nome);
+                
+                comando.executeUpdate(sql);
+                
+                request.getRequestDispatcher("Listar")
+                        .forward(request, response);
+                
+                
+                
+                
             } catch (Exception e){
+                out.println("Algo deu errado: " + e.getMessage());
                 e.printStackTrace();
             }
-            
+                
             
             
         }

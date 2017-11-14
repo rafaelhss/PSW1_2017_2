@@ -8,9 +8,6 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Connection;
 import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.util.ArrayList;
-import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -20,7 +17,7 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author Rafael.Soares
  */
-public class Pesquisar extends HttpServlet {
+public class Editar extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -35,43 +32,40 @@ public class Pesquisar extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
-            
-            try {
+        
+            try{
+                Class.forName("org.apache.derby.jdbc.ClientDriver");
                 
-               Class.forName("org.apache.derby.jdbc.ClientDriver");
-               
-               Connection con = DriverManager.getConnection("jdbc:derby://localhost:1527/sample","app", "app");
+                Connection con = DriverManager.getConnection("jdbc:derby://localhost:1527/sample","app", "app");
 
-               java.sql.Statement comando = con.createStatement();   
-               
-               
-               String produto = request.getParameter("prod");
-               
-               String sql = "SELECT * FROM PRODUTOS WHERE NOME LIKE '%XXXX%'";
-               sql = sql.replace("XXXX", produto);
-                System.out.println("SQL:" + sql);
-               ResultSet resultado = comando.executeQuery(sql);
+                java.sql.Statement comando = con.createStatement();  
                 
-               List<Produto> produtos = new ArrayList<>();
-               while(resultado.next()){
-                   Produto p = new Produto();
-                   p.setNome(resultado.getString("NOME"));
-                   p.setPreco(resultado.getFloat("PRECO"));
-                   p.setValidade(resultado.getString("VALIDADE"));
-                   produtos.add(p);
-               }
-               
-               request.setAttribute("lista", produtos);
-               request.getRequestDispatcher("lista.jsp")
-                       .forward(request, response);
-               
-               
-            } catch (Exception e){
+                 
+                String sql = "UPDATE PRODUTOS "
+                        + "SET PRECO=@@PRECO@@, "
+                        + "VALIDADE='@@VALIDADE@@' "
+                        + "WHERE NOME='@@NOME@@'";
+                
+                String nome = request.getParameter("nome");
+                String validade = request.getParameter("validade");
+                String preco = request.getParameter("preco");
+                
+                sql = sql.replace("@@PRECO@@", preco);
+                sql = sql.replace("@@VALIDADE@@", validade);
+                sql = sql.replace("@@NOME@@", nome);
+                
+                System.out.println("sql:" + sql);
+                int linhas = comando.executeUpdate(sql);
+                if(linhas != 1){
+                    out.print("Algum erro aconteceu. Fiz mais updates do que deveria, ou nenhum!");
+                }
+                
+                request.getRequestDispatcher("Listar")
+                        .forward(request, response);
+                
+            } catch(Exception e){
                 e.printStackTrace();
             }
-            
-            
-            
         }
     }
 

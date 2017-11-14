@@ -12,6 +12,18 @@
         <servlet-name>Pesquisar</servlet-name>
         <servlet-class>Pesquisar</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>Deletar</servlet-name>
+        <servlet-class>Deletar</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>FormEditar</servlet-name>
+        <servlet-class>FormEditar</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>Editar</servlet-name>
+        <servlet-class>Editar</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>Banco</servlet-name>
         <url-pattern>/Banco</url-pattern>
@@ -23,6 +35,18 @@
     <servlet-mapping>
         <servlet-name>Pesquisar</servlet-name>
         <url-pattern>/Pesquisar</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>Deletar</servlet-name>
+        <url-pattern>/Deletar</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>FormEditar</servlet-name>
+        <url-pattern>/FormEditar</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>Editar</servlet-name>
+        <url-pattern>/Editar</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
