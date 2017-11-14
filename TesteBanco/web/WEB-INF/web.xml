@@ -8,6 +8,10 @@
         <servlet-name>Listar</servlet-name>
         <servlet-class>Listar</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>Pesquisar</servlet-name>
+        <servlet-class>Pesquisar</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>Banco</servlet-name>
         <url-pattern>/Banco</url-pattern>
@@ -15,6 +19,10 @@
     <servlet-mapping>
         <servlet-name>Listar</servlet-name>
         <url-pattern>/Listar</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>Pesquisar</servlet-name>
+        <url-pattern>/Pesquisar</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
